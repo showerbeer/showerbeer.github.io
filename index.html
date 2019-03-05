@@ -21,13 +21,13 @@
         <div class="container">
             <div class="row my-4" v-for="item in articles">
                 <div class="card w-100">
-                    <h5 class="card-header">#{{ item.id + 1 }}
+                    <h5 class="card-header">#{{ item.id + 1 }} {{ item.title }}
                         <span class="badge badge-success mx-1" v-for="tag in item.tags">{{tag}}</span>
                         <div class="float-right">Pub: {{item.published}}</div>
                     </h5>
 
                     <div class="card-body">
-                        <h5 class="cart-title">{{ item.title }}</h5>
+                        <h5 class="cart-title">{{ item.headline }}</h5>
                         <p class="card-text">{{ item.body }}</p>
                         <a href="#" class="btn btn-primary">Read article</a>
                     </div>
@@ -43,11 +43,15 @@
                 <input type="text" class="form-control" id="articleTitle" placeholder="Enter article title" autocomplete="off">
             </div>
             <div class="form-group">
+                    <label for="articleHeadline">Headline</label>
+                    <input type="text" class="form-control" id="articleHeadline" placeholder="Enter article headline" autocomplete="off">
+                </div>
+            <div class="form-group">
                 <label for="articleTags">Article Tag</label>
                 <input type="text" class="form-control" id="articleTags" placeholder="Enter tags, comma separated" autocomplete="off">
             </div>
             <div class="form-group">
-                <label for="articleBody">Article Tag</label>
+                <label for="articleBody">Article Text</label>
                 <textarea class="form-control" id="articleBody" placeholder="Enter the body of your article" rows="5"></textarea>
             </div>
             <button onclick="addArticle()" class="btn btn-primary">Submit</button>
@@ -65,6 +69,7 @@
                 articles: [{
                         id: 0,
                         tags: ['pizza', 'cheese'],
+                        headline: 'Numero Uno!',
                         title: 'Vue eh?',
                         published: moment('2019-03-01').format('ddd M YYYY'),
                         body: 'Vis id dolore euismod, pri decore debitis lobortis ea. Deserunt assentior scribentur nam te, id quo fuisset delicatissimi. Cu per congue aperiam, id quo natum omnes. Ea partem impetus deleniti ius, ad suas iisque eos, porro homero suscipit et nam.'
@@ -72,6 +77,7 @@
                     {
                         id: 1,
                         tags: ['aple', 'banana', 'peach'],
+                        headline: 'All your base',
                         title: 'Not too bad',
                         published: moment('2019-03-04').format('ddd M YYYY'),
                         body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis dolor vitae dui iaculis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mollis tortor non dui laoreet, at placerat diam imperdiet. Duis augue ante, vehicula at turpis quis, bibendum tincidunt erat. Praesent ut eleifend metus. Vestibulum placerat felis libero, sit amet feugiat ipsum consectetur non. Proin dapibus, velit sit amet consequat porttitor, orci quam vehicula lacus, vel finibus ligula ex vitae orci. Curabitur interdum mauris vitae nibh cursus porta. Sed et porta libero. Sed ultrices viverra eros vitae aliquet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
@@ -79,6 +85,7 @@
                     {
                         id: 2,
                         tags: ['rice'],
+                        headline: 'Are belong to us',
                         title: 'Definitely growing on me',
                         published: moment('2019-03-05').format('ddd M YYYY'),
                         body: 'Sed at tortor finibus diam elementum mattis. Duis vulputate purus a varius hendrerit. Nullam faucibus, metus at porttitor dignissim, magna nunc luctus libero, pulvinar imperdiet lectus lectus convallis eros. Duis ac facilisis purus. Sed velit quam, porttitor ut aliquet nec, volutpat vel erat. Sed elementum, dui varius tempus gravida, metus risus commodo dolor, ac imperdiet est lorem eu enim. Curabitur ante augue, lacinia sed facilisis vel, blandit vel lacus. Sed vel lacus lorem. Nulla facilisi. In egestas nibh congue neque mollis faucibus.'
@@ -89,12 +96,14 @@
 
         function clear() {
             document.getElementById('articleTitle').value = '';
+            document.getElementById('articleHeadline').value = '';
             document.getElementById('articleTags').value = '';
             document.getElementById('articleBody').value = '';
         }
 
         function addArticle(e) {
             const title = document.getElementById('articleTitle').value;
+            const headline = document.getElementById('articleHeadline').value;
             const tags = document.getElementById('articleTags').value;
             const body = document.getElementById('articleBody').value;
 
@@ -102,6 +111,7 @@
                 id: app.articles.length,
                 tags: tags.split(',').map(t => t.trim()),
                 title,
+                headline,
                 published: moment().format('ddd M YYYY'),
                 body
             })
