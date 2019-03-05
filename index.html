@@ -25,9 +25,9 @@
             </div>
             <div class="row my-4" v-for="item in articles">
                 <div style="height: 30px; width: 30px; position: relative; top: 40px; left: -50px; cursor: pointer;" @click="like(item.id)">
-                    <img style="height: 30px; width: 30px; position: absolute; z-index: -1;" src="https://upload.wikimedia.org/wikipedia/commons/8/86/A_perfect_SVG_heart.svg" />
-                    <div style="margin: 0 auto; text-align: center; color: white; text-decoration: bold; z-index: 1">{{
-                        item.likes }}</div>
+                    <img v-if="item.likes > 0" style="height: 30px; width: 30px; position: absolute; z-index: -1;" src="https://upload.wikimedia.org/wikipedia/commons/8/86/A_perfect_SVG_heart.svg" />
+                    <img v-if="item.likes === 0" style="height: 30px; width: 30px; position: absolute; z-index: -1;" src="https://upload.wikimedia.org/wikipedia/commons/3/30/Broken_heart_SVG-upper-pivot.svg" />
+                    <div style="margin: 0 auto; text-align: center; color: white; text-decoration: bold; z-index: 1" v-if="item.likes > 0">{{ item.likes }}</div>
                 </div>
 
                 <div class="card w-100">
@@ -140,6 +140,7 @@
                 tags: tags.split(',').map(t => t.trim()),
                 title,
                 headline,
+                likes: 0,
                 published: moment().format('ddd M YYYY'),
                 body
             })
