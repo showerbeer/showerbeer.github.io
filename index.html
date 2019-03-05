@@ -24,6 +24,12 @@
                 <h3>Feel free to write some</h3>
             </div>
             <div class="row my-4" v-for="item in articles">
+                <div style="height: 30px; width: 30px; position: relative; top: 40px; left: -50px; cursor: pointer;" @click="like(item.id)">
+                    <img style="height: 30px; width: 30px; position: absolute; z-index: -1;" src="https://upload.wikimedia.org/wikipedia/commons/8/86/A_perfect_SVG_heart.svg" />
+                    <div style="margin: 0 auto; text-align: center; color: white; text-decoration: bold; z-index: 1">{{
+                        item.likes }}</div>
+                </div>
+
                 <div class="card w-100">
                     <h5 class="card-header">#{{ item.id + 1 }} {{ item.title }}
                         <span class="badge badge-success mx-1" v-for="tag in item.tags">{{tag}}</span>
@@ -45,15 +51,18 @@
             <h1>New blog post</h1>
             <div class="form-group">
                 <label for="articleTitle">Article Title</label>
-                <input type="text" class="form-control" id="articleTitle" placeholder="Enter article title" autocomplete="off">
+                <input type="text" class="form-control" id="articleTitle" placeholder="Enter article title"
+                    autocomplete="off">
             </div>
             <div class="form-group">
-                    <label for="articleHeadline">Headline</label>
-                    <input type="text" class="form-control" id="articleHeadline" placeholder="Enter article headline" autocomplete="off">
-                </div>
+                <label for="articleHeadline">Headline</label>
+                <input type="text" class="form-control" id="articleHeadline" placeholder="Enter article headline"
+                    autocomplete="off">
+            </div>
             <div class="form-group">
                 <label for="articleTags">Article Tags</label>
-                <input type="text" class="form-control" id="articleTags" placeholder="Enter tags, comma separated" autocomplete="off">
+                <input type="text" class="form-control" id="articleTags" placeholder="Enter tags, comma separated"
+                    autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="articleBody">Article Text</label>
@@ -77,6 +86,7 @@
                         headline: 'Numero Uno!',
                         title: 'Vue eh?',
                         published: moment('2019-03-01').format('ddd M YYYY'),
+                        likes: 1,
                         body: 'Vis id dolore euismod, pri decore debitis lobortis ea. Deserunt assentior scribentur nam te, id quo fuisset delicatissimi. Cu per congue aperiam, id quo natum omnes. Ea partem impetus deleniti ius, ad suas iisque eos, porro homero suscipit et nam.'
                     },
                     {
@@ -85,6 +95,7 @@
                         headline: 'All your base',
                         title: 'Not too bad',
                         published: moment('2019-03-04').format('ddd M YYYY'),
+                        likes: 3,
                         body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis dolor vitae dui iaculis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mollis tortor non dui laoreet, at placerat diam imperdiet. Duis augue ante, vehicula at turpis quis, bibendum tincidunt erat. Praesent ut eleifend metus. Vestibulum placerat felis libero, sit amet feugiat ipsum consectetur non. Proin dapibus, velit sit amet consequat porttitor, orci quam vehicula lacus, vel finibus ligula ex vitae orci. Curabitur interdum mauris vitae nibh cursus porta. Sed et porta libero. Sed ultrices viverra eros vitae aliquet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
                     },
                     {
@@ -93,13 +104,20 @@
                         headline: 'Are belong to us',
                         title: 'Definitely growing on me',
                         published: moment('2019-03-05').format('ddd M YYYY'),
+                        likes: 9,
                         body: 'Sed at tortor finibus diam elementum mattis. Duis vulputate purus a varius hendrerit. Nullam faucibus, metus at porttitor dignissim, magna nunc luctus libero, pulvinar imperdiet lectus lectus convallis eros. Duis ac facilisis purus. Sed velit quam, porttitor ut aliquet nec, volutpat vel erat. Sed elementum, dui varius tempus gravida, metus risus commodo dolor, ac imperdiet est lorem eu enim. Curabitur ante augue, lacinia sed facilisis vel, blandit vel lacus. Sed vel lacus lorem. Nulla facilisi. In egestas nibh congue neque mollis faucibus.'
                     }
                 ]
             },
             methods: {
-                remove: function(id) {
+                remove: function (id) {
                     app.articles = app.articles.filter(a => a.id != id);
+                },
+                like: function (id) {
+                    app.articles.map(a => {
+                        if(a.id == id)
+                            a.likes ++;
+                    });
                 }
             }
         });
