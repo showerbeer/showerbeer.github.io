@@ -30,6 +30,7 @@
                         <h5 class="cart-title">{{ item.headline }}</h5>
                         <p class="card-text">{{ item.body }}</p>
                         <a href="#" class="btn btn-primary">Read article</a>
+                        <a href="#" class="btn btn-danger" @click="remove(item.id)">Delete</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +66,7 @@
         const app = new Vue({
             el: '#app',
             data: {
-                blogTitle: 'My Blog',
+                blogTitle: 'weblog',
                 articles: [{
                         id: 0,
                         tags: ['pizza', 'cheese'],
@@ -91,6 +92,11 @@
                         body: 'Sed at tortor finibus diam elementum mattis. Duis vulputate purus a varius hendrerit. Nullam faucibus, metus at porttitor dignissim, magna nunc luctus libero, pulvinar imperdiet lectus lectus convallis eros. Duis ac facilisis purus. Sed velit quam, porttitor ut aliquet nec, volutpat vel erat. Sed elementum, dui varius tempus gravida, metus risus commodo dolor, ac imperdiet est lorem eu enim. Curabitur ante augue, lacinia sed facilisis vel, blandit vel lacus. Sed vel lacus lorem. Nulla facilisi. In egestas nibh congue neque mollis faucibus.'
                     }
                 ]
+            },
+            methods: {
+                remove: function(id) {
+                    app.articles = app.articles.filter(a => a.id != id);
+                }
             }
         });
 
