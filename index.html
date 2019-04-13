@@ -1,153 +1,61 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Lassen.dev</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Day 12 - KONAMI sequence</title>
 </head>
-
 <body>
-    <div id="app">
-        <div class="container">
-            <h1 class="display1">
-                Hello there, welcome to {{ blogTitle }}
-            </h1>
-        </div>
-        <hr>
-        <div class="container">
-            <div v-if="articles.length === 0">
-                <h2>There are no blog posts here!</h2>
-                <h3>Feel free to write some</h3>
-            </div>
-            <div class="row my-4" v-for="item in articles">
-                <div style="height: 30px; width: 30px; position: relative; top: 40px; left: -50px; cursor: pointer;" @click="like(item.id)">
-                    <img v-if="item.likes > 0" style="height: 30px; width: 30px; position: absolute; z-index: -1;" src="https://upload.wikimedia.org/wikipedia/commons/8/86/A_perfect_SVG_heart.svg" />
-                    <img v-if="item.likes === 0" style="height: 30px; width: 30px; position: absolute; z-index: -1;" src="https://upload.wikimedia.org/wikipedia/commons/3/30/Broken_heart_SVG-upper-pivot.svg" />
-                    <div style="margin: 0 auto; text-align: center; color: white; text-decoration: bold; z-index: 1" v-if="item.likes > 0">{{ item.likes }}</div>
-                </div>
-
-                <div class="card w-100">
-                    <h5 class="card-header">#{{ item.id + 1 }} {{ item.title }}
-                        <span class="badge badge-success mx-1" v-for="tag in item.tags">{{tag}}</span>
-                        <div class="float-right">Pub: {{item.published}}</div>
-                    </h5>
-
-                    <div class="card-body">
-                        <h5 class="cart-title">{{ item.headline }}</h5>
-                        <p class="card-text">{{ item.body }}</p>
-                        <a href="#" class="btn btn-primary">Read article</a>
-                        <a href="#" class="btn btn-danger" @click="remove(item.id)">Delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr />
-        <div class="container">
-            <h1>New blog post</h1>
-            <div class="form-group">
-                <label for="articleTitle">Article Title</label>
-                <input type="text" class="form-control" id="articleTitle" placeholder="Enter article title"
-                    autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="articleHeadline">Headline</label>
-                <input type="text" class="form-control" id="articleHeadline" placeholder="Enter article headline"
-                    autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="articleTags">Article Tags</label>
-                <input type="text" class="form-control" id="articleTags" placeholder="Enter tags, comma separated"
-                    autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="articleBody">Article Text</label>
-                <textarea class="form-control" id="articleBody" placeholder="Enter the body of your article" rows="5"></textarea>
-            </div>
-            <button onclick="addArticle()" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/moment"></script>
-
-    <script>
-        const app = new Vue({
-            el: '#app',
-            data: {
-                blogTitle: 'weblog',
-                articles: [{
-                        id: 0,
-                        tags: ['pizza', 'cheese'],
-                        headline: 'Numero Uno!',
-                        title: 'Vue eh?',
-                        published: moment('2019-03-01').format('ddd M YYYY'),
-                        likes: 1,
-                        body: 'Vis id dolore euismod, pri decore debitis lobortis ea. Deserunt assentior scribentur nam te, id quo fuisset delicatissimi. Cu per congue aperiam, id quo natum omnes. Ea partem impetus deleniti ius, ad suas iisque eos, porro homero suscipit et nam.'
-                    },
-                    {
-                        id: 1,
-                        tags: ['aple', 'banana', 'peach'],
-                        headline: 'All your base',
-                        title: 'Not too bad',
-                        published: moment('2019-03-04').format('ddd M YYYY'),
-                        likes: 3,
-                        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis dolor vitae dui iaculis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mollis tortor non dui laoreet, at placerat diam imperdiet. Duis augue ante, vehicula at turpis quis, bibendum tincidunt erat. Praesent ut eleifend metus. Vestibulum placerat felis libero, sit amet feugiat ipsum consectetur non. Proin dapibus, velit sit amet consequat porttitor, orci quam vehicula lacus, vel finibus ligula ex vitae orci. Curabitur interdum mauris vitae nibh cursus porta. Sed et porta libero. Sed ultrices viverra eros vitae aliquet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
-                    },
-                    {
-                        id: 2,
-                        tags: ['rice'],
-                        headline: 'Are belong to us',
-                        title: 'Definitely growing on me',
-                        published: moment('2019-03-05').format('ddd M YYYY'),
-                        likes: 9,
-                        body: 'Sed at tortor finibus diam elementum mattis. Duis vulputate purus a varius hendrerit. Nullam faucibus, metus at porttitor dignissim, magna nunc luctus libero, pulvinar imperdiet lectus lectus convallis eros. Duis ac facilisis purus. Sed velit quam, porttitor ut aliquet nec, volutpat vel erat. Sed elementum, dui varius tempus gravida, metus risus commodo dolor, ac imperdiet est lorem eu enim. Curabitur ante augue, lacinia sed facilisis vel, blandit vel lacus. Sed vel lacus lorem. Nulla facilisi. In egestas nibh congue neque mollis faucibus.'
-                    }
-                ]
-            },
-            methods: {
-                remove: function (id) {
-                    app.articles = app.articles.filter(a => a.id != id);
-                },
-                like: function (id) {
-                    app.articles.map(a => {
-                        if(a.id == id)
-                            a.likes ++;
-                    });
-                }
-            }
-        });
-
-        function clear() {
-            document.getElementById('articleTitle').value = '';
-            document.getElementById('articleHeadline').value = '';
-            document.getElementById('articleTags').value = '';
-            document.getElementById('articleBody').value = '';
+    <style>
+        body {
+            margin: 0 auto;
+            text-align: center;
         }
 
-        function addArticle(e) {
-            const title = document.getElementById('articleTitle').value;
-            const headline = document.getElementById('articleHeadline').value;
-            const tags = document.getElementById('articleTags').value;
-            const body = document.getElementById('articleBody').value;
+        body .sequence {
+            font-size: 4em;
+            letter-spacing: 1em;
+        }
 
-            app.articles.push({
-                id: app.articles.length,
-                tags: tags.split(',').map(t => t.trim()),
-                title,
-                headline,
-                likes: 0,
-                published: moment().format('ddd M YYYY'),
-                body
-            })
+        .guile {
+            background-image: url('guile.jpg');
+        }
+    </style>
 
-            clear();
+    <audio src="guile.mp3" type="audio/mpeg"></audio>
+    <p class="sequence"></p>
+
+    <div class="guile"></div>
+
+    <script>
+        const UP = 38, DOWN = 40, LEFT = 37, RIGHT = 39, A = 65, B = 66;
+        const icons = {38: '↑', 40: '↓', 37: '←', 39: '→', 65: '🅰️', 66: '🅱️'};
+        const sequence = [UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT, B, A];
+        let counter = 0;
+        let sequenceComplete = false;
+        window.onkeyup = (e) => {
+            if(!sequenceComplete) {
+                konamiSequence(e.keyCode);
+            }
+        };
+
+        function konamiSequence(keyCode) {
+            if(counter <= sequence.length && keyCode === sequence[counter]) {
+                document.querySelector('p.sequence').append(icons[keyCode]);
+                counter ++;
+                checkComplete();
+            } else {
+                document.querySelector('p.sequence').textContent = '';
+                counter = 0;
+            }
+        }
+
+        function checkComplete() {
+            if(counter === sequence.length) {
+                document.body.className = 'guile';
+                sequenceComplete = true;
+                document.querySelector('audio').play();
+            }
         }
     </script>
 </body>
-
 </html>
